@@ -148,6 +148,30 @@ export default function ParticipantContainer() {
             disabled={false}
           />
         </View> */}
+
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            top: '88%',
+            right: 12,
+            zIndex: 1,
+            opacity: 0.8,
+
+            backgroundColor: '#899ca5',
+            padding: 20,
+            borderRadius: 50,
+            elevation: 10,
+          }}
+          onPress={() => {
+            navigation.navigate('Home');
+          }}>
+          <Image
+            style={styles.addparticipant}
+            source={images.addParticipantButton}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+
         <Modal transparent visible={modalVisible}>
           <View style={styles.centeredView}>
             <View style={styles.outerView}>
@@ -242,5 +266,9 @@ const styles = StyleSheet.create({
   },
   cancelIcon: {
     alignItems: 'center',
+  },
+  addparticipant: {
+    width: 40,
+    height: 40,
   },
 });
