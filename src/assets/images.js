@@ -5,7 +5,8 @@ const images = {
   cancelImage: require('./img/cross.png'),
   moreImage: require('./img/application.png'),
   favouriteImage: require('./img/star.png'),
-  addFavouriteImage:require('./img/favourite.png')
+  addFavouriteImage: require('./img/favourite.png'),
+  sortImage: require('./img/sort.png'),
 };
 
 export default images;

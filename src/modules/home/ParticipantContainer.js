@@ -32,15 +32,29 @@ export default function ParticipantContainer() {
   const data = useSelector(userDetails);
   const count = useSelector(getFavoritesCount);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modal1Visible, setModal1Visible] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  console.log(data, 'selectors');
+  const [details, setDetails] = useState(data);
   useEffect(() => {
-    console.log(data.length, count, 'sanjanaa');
-
     if (data) {
       //console.log(data, 'selectorsdata');
     }
   }, [data]);
+  console.log(details, 'sanjanaa');
+  const sortData = (data, criteria) => {
+    console.log('inside sort');
+    return data.slice().sort((a, b) => {
+      const propA = a[criteria].toLowerCase();
+      const propB = b[criteria].toLowerCase();
+      return propA.localeCompare(propB);
+    });
+  };
+
+  const handleSort = criteria => {
+    const sorted = sortData(data, criteria);
+    setDetails(sorted);
+    setModal1Visible(false);
+  };
 
   const AvatarWithInitials = ({initials}) => {
     return (
@@ -136,18 +150,39 @@ export default function ParticipantContainer() {
         start={{x: 1, y: 1}}
         end={{x: 0.7, y: 0.3}}
         style={{flex: 1}}>
+        <TouchableOpacity
+          onPress={() => setModal1Visible(true)}
+          style={styles.modalIcon}>
+          <Image
+            style={styles.sortModalButton}
+            source={images.sortImage}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+        <Modal animationType="slide" transparent={true} visible={modal1Visible}>
+          <View style={styles.outerView}>
+            <View style={styles.modalView}>
+              <TouchableOpacity
+                onPress={() => handleSort('firstName')}
+                style={{backgroundColor: 'pink', borderRadius: 20, margin: 10}}>
+                <Text style={{fontSize: 20, fontWeight: 'bold', padding: 5}}>
+                  Sort by First Name
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleSort('lastName')}
+                style={{backgroundColor: 'pink', borderRadius: 20}}>
+                <Text style={{fontSize: 20, fontWeight: 'bold', padding: 5}}>
+                  Sort by Last Name
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <FlatList
-          data={data}
+          data={details}
           renderItem={item => handleParticipantList(item)}
         />
-        {/* <View style={{}}>
-          <Button
-            title="Save"
-            onPress={() => setModalVisible(true)}
-            customStyles={styles.customButton}
-            disabled={false}
-          />
-        </View> */}
 
         <TouchableOpacity
           style={{
@@ -174,7 +209,7 @@ export default function ParticipantContainer() {
 
         <Modal transparent visible={modalVisible}>
           <View style={styles.centeredView}>
-            <View style={styles.outerView}>
+            <View>
               <TouchableOpacity
                 onPress={() => setModalVisible(false)}
                 style={styles.cancelIcon}>
@@ -242,9 +277,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
   },
-  outerView: {
-    // marginTop: viewport.height * 0.01,
-  },
   customButton: {
     borderRadius: 20,
 
@@ -270,5 +302,35 @@ const styles = StyleSheet.create({
   addparticipant: {
     width: 40,
     height: 40,
+  },
+
+  outerView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+
+    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+  },
+  modalView: {
+   backgroundColor: 'white',
+borderRadius:5,
+    padding: 20,
+    alignItems: 'center',
+  },
+  sortModalButton: {
+    height: 35,
+    width: 35,
+  },
+  modalIcon: {
+    alignItems: 'flex-end',
+    margin: 10,
   },
 });
