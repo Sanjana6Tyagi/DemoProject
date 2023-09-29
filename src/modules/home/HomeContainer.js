@@ -9,10 +9,15 @@ import {
 import TextInput from '../../components/Atoms/TextInput';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import {
+  useNavigation,
+  StackActions,
+  useFocusEffect,
+} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {ScreenHeader} from '../../components/Molecules/screenHeader';
 import Button from '../../components/Atoms/Button';
+
 import images from '../../assets/images';
 import {saveUserDetails} from '../../common/redux/home/actions';
 import {
@@ -30,8 +35,10 @@ export default function HomeContainer() {
   const [jobTitle, setJobTitle] = useState('');
   const [salary, setSalary] = useState('');
 
+  useFocusEffect(() => {});
   const navigateToParticipants = () => {
     setModalVisible(true);
+    //navigation.navigate('Participants');
   };
   const handleDetailsSubmit = () => {
     const body = {
@@ -42,6 +49,11 @@ export default function HomeContainer() {
     };
 
     dispatch(saveUserDetails(body));
+    setModalVisible(false);
+    setFirstName('');
+    setLastName('');
+    setJobTitle('');
+    setSalary('');
     navigation.navigate('Participants');
   };
   return (
@@ -72,7 +84,11 @@ export default function HomeContainer() {
           </LinearGradient>
         </View>
 
-        <Modal animationType="slide" transparent visible={modalVisible}>
+        <Modal
+          animationType="slide"
+          transparent
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}>
           <View style={styles.centeredView}>
             <View style={styles.outerView}>
               <TouchableOpacity
