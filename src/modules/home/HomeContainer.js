@@ -19,7 +19,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import Icon1 from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function HomeContainer() {
   const navigation = useNavigation();
@@ -66,18 +66,24 @@ export default function HomeContainer() {
             <Button
               onPress={navigateToParticipants}
               title={'Add Participants'}
-              icon={'account-multiple-plus-outline'}
+              icon={images.addParticipantButton}
+              disabled={false}
             />
           </LinearGradient>
         </View>
 
         <Modal animationType="slide" transparent visible={modalVisible}>
           <View style={styles.centeredView}>
-            <View style={styles.outerOtp}>
+            <View style={styles.outerView}>
               <TouchableOpacity
                 onPress={() => setModalVisible(false)}
                 style={styles.cancelIcon}>
-                <Icon1 color="white" name="cancel" size={25} />
+                {/* <Icon name="directions" size={18} color="white" /> */}
+                <Image
+                  style={styles.cancelModalButton}
+                  source={images.cancelImage}
+                  resizeMode="contain"
+                />
               </TouchableOpacity>
             </View>
             <View style={{marginBottom: '3%'}}>
@@ -153,7 +159,10 @@ const styles = StyleSheet.create({
   addParticipantImage: {
     width: '70%',
   },
-
+  cancelModalButton: {
+    height: 32,
+    width: 32,
+  },
   centeredView: {
     height: '70%',
 
@@ -172,7 +181,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  outerOtp: {
+  outerView: {
     // marginTop: viewport.height * 0.01,
   },
   cancelIcon: {

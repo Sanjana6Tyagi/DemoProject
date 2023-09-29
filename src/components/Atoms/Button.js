@@ -1,11 +1,11 @@
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {colors} from '../../themes/colors';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/AntDesign';
 export default function Button(props) {
   const {title, onPress, customStyles, textStyles, disabled, icon} = props;
   return (
@@ -21,11 +21,16 @@ export default function Button(props) {
         disabled={disabled}>
         {icon ? (
           <View style={styles.placeholderIcon}>
-            <Icon
+            {/* <Icon
               style={styles.placeholderIcon}
               color={'black'}
               name={icon}
               size={25}
+            /> */}
+            <Image
+              style={styles.addParticipantImage}
+              source={icon}
+               resizeMode="contain"
             />
           </View>
         ) : (
@@ -52,7 +57,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 6,
 
-   // backgroundColor: colors.blue2,
+    // backgroundColor: colors.blue2,
   },
   textStyles: {
     color: colors.white,
@@ -60,8 +65,13 @@ const styles = StyleSheet.create({
   },
   placeholderIcon: {
     top: 1,
-
-    width: 40,
-    height: 40,
+right:7,
+    // width: 4,
+    // height: 4,
   },
+  addParticipantImage:{
+
+    width: 30,
+    height: 30,
+  }
 });

@@ -1,15 +1,23 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {colors} from '../../themes/colors';
-
+import images from '../../assets/images';
 import Icon from 'react-native-vector-icons/Entypo';
+
 export const ScreenHeader = props => {
-  const {title, containerStyle, titleStyle, leftView, navigation, showIcon} =
-    props;
+  const {
+    title,
+    containerStyle,
+    titleStyle,
+    leftView,
+    navigation,
+    showIcon,
+    handlePress,
+  } = props;
 
   return (
     <View
@@ -23,15 +31,17 @@ export const ScreenHeader = props => {
           leftView ? {...leftView, ...styles.leftView} : {...styles.leftView}
         }>
         {showIcon ? (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Home');
-            }}>
-            <Icon
+          <TouchableOpacity onPress={handlePress}>
+            {/* <Icon
               color={colors.titleBlack1}
               style={styles.back}
               size={30}
               name={'back'}
+            /> */}
+            <Image
+              style={styles.addParticipantImage}
+              source={images.moreImage}
+              resizeMode="contain"
             />
           </TouchableOpacity>
         ) : (
@@ -76,5 +86,9 @@ const styles = StyleSheet.create({
   },
   back: {
     color: colors.black,
+  },
+  addParticipantImage: {
+    height: 32,
+    width: 32,
   },
 });
